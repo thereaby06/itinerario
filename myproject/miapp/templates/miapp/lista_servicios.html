@@ -1,0 +1,39 @@
+{% extends 'miapp/base.html' %}
+
+{% block title %}Lista de Servicios{% endblock %}
+
+{% block content %}
+<h1>Lista de Servicios</h1>
+<form method="get" action="{% url 'lista_servicios' %}">
+    <input type="text" name="q" placeholder="Buscar por moto/cliente" value="{{ query }}">
+    <button type="submit">Buscar</button>
+</form>
+<a href="{% url 'agregar_servicio' %}">Agregar Servicio</a>
+<table>
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Moto/Cliente</th>
+            <th>Tipo de Servicio</th>
+            <th>Descripción</th>
+            <th>Cobro</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for servicio in servicios %}
+        <tr>
+            <td>{{ servicio.fecha }}</td>
+            <td>{{ servicio.moto_cliente }}</td>
+            <td>{{ servicio.get_tipo_servicio_display }}</td>
+            <td>{{ servicio.descripcion }}</td>
+            <td>{{ servicio.cobro }}</td>
+            <td>
+                <a href="{% url 'editar_servicio' servicio.pk %}">Editar</a>
+                <a href="{% url 'eliminar_servicio' servicio.pk %}">Eliminar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
